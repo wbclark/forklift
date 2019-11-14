@@ -1,0 +1,65 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - puppet_repositories
+    - epel_repositories
+
+- hosts: all
+  tasks:
+
+    - name: 'Install packages'
+      yum:
+        name:
+          - ruby-devel
+          - rubygem-bundler
+          - libxml2-devel
+          - ruby
+          - rake
+          - gcc
+          - wget
+          - git
+          - nss
+          - puppet
+          - glib2
+        state: "present"
+      become: true
+      
+    - name: "Install librarian-puppet"
+      gem:
+        name: librarian-puppet
+        state: present
+
+    - name: "Clone puppet-pulpcore"
+      git:
+        repo: https://github.com/wbclark/puppet-pulpcore.git
+        dest: "/home/vagrant/puppet-pulpcore"
+        version: runpdk
+
+    - name: "Deploy Puppetfile"
+      copy:
+        content: "forge \"https://forgeapi.puppetlabs.com\"\nmetadata"
+        dest: "/home/vagrant/puppet-pulpcore/Puppetfile"
+
+    - name: "Install Puppet modules"
+      shell: "/home/vagrant/bin/librarian-puppet install"
+      args:
+        chdir: "/home/vagrant/puppet-pulpcore"
+      remote_user: "vagrant"
+
+    - name: "Link pulpcore puppet module"
+      file:
+        state: link
+        src: "/home/vagrant/puppet-pulpcore"
+        dest: "/home/vagrant/puppet-pulpcore/modules/pulpcore"
+
+    - name: "Deploy test.pp"
+      copy:
+        content: |
+          class { pulpcore:
+          }
+        dest: "/home/vagrant/test.pp"
+
+    - name: "Run puppet apply"
+      become: true
+      shell: "/opt/puppetlabs/bin/puppet apply --modulepath=/home/vagrant/puppet-pulpcore/modules /home/vagrant/test.pp"

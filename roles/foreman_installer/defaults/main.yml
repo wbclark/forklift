@@ -7,7 +7,16 @@ foreman_installer_scenario: foreman
 foreman_installer_scenario_flag: '{{ "--scenario" if foreman_installer_scenario else "" }}'
 foreman_installer_upgrade: False
 foreman_installer_command: foreman-installer
-foreman_installer_custom_hiera:
+foreman_installer_custom_hiera: |
+  apache::default_mods: false
+  apache::mpm_module: 'event'
+  apache::mod::event::serverlimit: 64
+  apache::mod::event::startservers: 16
+  apache::mod::event::maxrequestworkers: 1024
+  apache::mod::event::minsparethreads: 128
+  apache::mod::event::maxsparethreads: 384
+  apache::mod::event::threadsperchild: 16
+  apache::mod::event::maxconnectionsperchild: 4096
 foreman_installer_no_colors: True
 foreman_installer_disable_system_checks: False
 

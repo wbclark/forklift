@@ -13,7 +13,7 @@ foreman_installer_no_colors: True
 foreman_installer_disable_system_checks: False
 
 # Comma-separated list of "organization/module/pr_number", e.g. "katello/foreman_proxy_content/37,katello/certs/34"
-foreman_installer_module_prs: ["katello/foreman_proxy_content/409"]
+foreman_installer_module_prs: []
 # Another option is checkout which can be useful if you're not based on master
 foreman_installer_module_prs_strategy: "merge"
 

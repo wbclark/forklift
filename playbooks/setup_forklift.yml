@@ -30,7 +30,7 @@
   tasks:
     - name: 'Install Forklift dependencies'
       become: true
-      package:
+      ansible.builtin.package:
         name:
           - ansible
           - git-core
@@ -49,7 +49,7 @@
 
     - name: 'install telemetry dependencies'
       become: true
-      pip:
+      ansible.builtin.pip:
         name:
           - protobuf<3.21
           - opentelemetry-api
@@ -61,18 +61,18 @@
         - ansible_distribution_major_version != '7'
 
     - name: 'Clone Forklift'
-      git:
+      ansible.builtin.git:
         repo: "{{ forklift_url }}"
         version: "{{ forklift_version }}"
         dest: "{{ forklift_dest }}"
 
     - name: 'Configure Forklift'
-      copy:
+      ansible.builtin.copy:
         content: "{{ forklift_config | to_nice_yaml }}"
         dest: "{{ forklift_dest }}/vagrant/settings.yaml"
 
     - name: 'Install Forklift collection dependencies'
-      command:
+      ansible.builtin.command:
         cmd: ansible-galaxy collection install -r requirements.yml
         chdir: "{{ forklift_dest }}"
       register: collection_install

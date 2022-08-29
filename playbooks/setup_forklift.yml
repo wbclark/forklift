@@ -37,7 +37,7 @@
           - rubygem-deep_merge
         state: 'present'
 
-    - name: 'install telemetry dependencies'
+    - name: 'Install telemetry dependencies'
       become: true
       ansible.builtin.pip:
         name:

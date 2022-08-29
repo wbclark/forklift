@@ -1,11 +1,11 @@
 ---
 - name: 'install pvalena/rubygems copr'
-  get_url:
+  ansible.builtin.get_url:
     url: https://copr.fedorainfracloud.org/coprs/pvalena/rubygems/repo/epel-{{ ansible_distribution_major_version }}/pvalena-rubygems-epel-{{ ansible_distribution_major_version }}.repo
     dest: /etc/yum.repos.d/pvalena-rubygems.repo
 
 - name: 'install pvalena/vagrant copr'
-  get_url:
+  ansible.builtin.get_url:
     url: https://copr.fedorainfracloud.org/coprs/pvalena/vagrant/repo/epel-{{ ansible_distribution_major_version }}/pvalena-vagrant-epel-{{ ansible_distribution_major_version }}.repo
     dest: /etc/yum.repos.d/pvalena-vagrant.repo
 
@@ -15,15 +15,15 @@
     dest: /etc/yum.repos.d/evgeni-vagrant.repo
 
 - name: 'install vagrant'
-  package:
+  ansible.builtin.package:
     name: vagrant
     state: present
 
 - name: 'install vagrant-libvirt'
-  package:
+  ansible.builtin.package:
     name: vagrant-libvirt
     state: present
   when: vagrant_libvirt
 
-- include_tasks: 'vagrant_scp.yml'
+- ansible.builtin.include_tasks: 'vagrant_scp.yml'
   when: vagrant_scp

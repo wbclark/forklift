@@ -1,6 +1,6 @@
 ---
 - name: 'Remove foreman-client-release'
-  yum:
+  ansible.builtin.yum:
     name: foreman-client-release
     state: absent
   tags:

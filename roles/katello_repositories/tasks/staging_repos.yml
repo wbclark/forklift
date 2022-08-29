@@ -1,6 +1,6 @@
 ---
 - name: 'Remove katello-repos'
-  yum:
+  ansible.builtin.yum:
     name: katello-repos
     state: absent
 
@@ -14,7 +14,7 @@
     - packages
 
 - name: 'Enable katello:el8 module'
-  command: dnf module enable -y katello:el8
+  ansible.builtin.command: dnf module enable -y katello:el8
   # can't use the `dnf` module for modules without a default stream
   # https://github.com/ansible/ansible/issues/56504
   # https://github.com/ansible/ansible/issues/64852
@@ -24,10 +24,10 @@
     - ansible_distribution_major_version == '8'
 
 - name: 'Add Pulpcore repository'
-  include_role:
+  ansible.builtin.include_role:
     name: pulpcore_repositories
 
 - name: 'Add Candlepin repository'
-  include_role:
+  ansible.builtin.include_role:
     name: candlepin_repositories
   when: candlepin_repositories_version is defined or katello_repositories_staging_source == "stagingyum"

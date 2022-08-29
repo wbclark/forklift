@@ -1,15 +1,15 @@
 ---
 - name: 'Stop services'
-  command: foreman-maintain service stop
+  ansible.builtin.command: foreman-maintain service stop
   when: foreman_installer_scenario != 'foreman'
 
 - name: 'Update packages'
-  import_role:
+  ansible.builtin.import_role:
     name: update_os_packages
 
-- include_tasks: installer_version.yml
+- ansible.builtin.include_tasks: installer_version.yml
 
 - name: 'Run installer upgrade'
-  import_tasks: "install.yml"
+  ansible.builtin.import_tasks: "install.yml"
   vars:
     foreman_installer_disable_system_checks: "{{ foreman_installer_scenario != 'foreman' }}"

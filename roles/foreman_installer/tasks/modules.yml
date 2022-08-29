@@ -1,6 +1,6 @@
 ---
 - name: Switch to PostgreSQL 13
-  command: dnf module switch-to postgresql:13 -y
+  ansible.builtin.command: dnf module switch-to postgresql:13 -y
   when:
     - foreman_repositories_version is defined
     - foreman_repositories_version == "nightly" or foreman_repositories_version is version('3.11', '>=')

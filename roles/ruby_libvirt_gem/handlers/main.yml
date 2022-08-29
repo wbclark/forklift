@@ -1,5 +1,5 @@
 ---
 - name: 'Restart smart proxy'
-  service:
+  ansible.builtin.service:
     name: foreman-proxy
     state: restarted

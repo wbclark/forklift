@@ -1,6 +1,6 @@
 ---
 - name: 'Install libvirt gem'
-  yum:
+  ansible.builtin.yum:
     name: rubygem-ruby-libvirt
     state: present
   notify:

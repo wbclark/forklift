@@ -5,8 +5,10 @@
     - devel is defined
     - devel
 
-- ansible.builtin.include_tasks: install.yml
+- name: Include install.yml
+  ansible.builtin.include_tasks: install.yml
   when: not foreman_proxy_content_upgrade
 
-- ansible.builtin.include_tasks: upgrade.yml
+- name: Include upgrade.yml
+  ansible.builtin.include_tasks: upgrade.yml
   when: foreman_proxy_content_upgrade

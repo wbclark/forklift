@@ -1,5 +1,5 @@
 ---
-- name: 'install vagrant-scp'
+- name: 'Install vagrant-scp'
   ansible.builtin.package:
     name: vagrant-scp
     state: present

@@ -1,5 +1,5 @@
 ---
-- name: get forklift versions
+- name: Get forklift versions
   forklift_versions:
     file: "{{ forklift_versions_file }}"
     scenario: "{{ scenario }}"

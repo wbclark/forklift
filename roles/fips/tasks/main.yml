@@ -1,5 +1,4 @@
 ---
-<<<<<<< HEAD
 - when: not ansible_fips
   block:
     - name: Install FIPS package

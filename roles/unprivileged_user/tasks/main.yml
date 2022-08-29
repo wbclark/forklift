@@ -41,6 +41,7 @@
   register: authorized_keys_file
   become: true
 
+- name: "Copy root authorized_keys to unprivileged user"
 - when:
     - not authorized_keys_file.stat.exists
     - unprivileged_user_import_ssh_pub_key | default(True)

@@ -1,0 +1,3 @@
+---
+inherit_kerberos_config: '/etc/krb5.conf'
+inherit_kerberos_ccache: False

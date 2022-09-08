@@ -1,0 +1,8 @@
+---
+- name: "Configure git repository"
+  ansible.builtin.include_tasks: "{{ 'clone.yml' if ansible_loop.first else 'remote.yml' }}"
+  loop: "{{ git_repo_repository.remotes }}"
+  loop_control:
+    loop_var: remote
+    extended: yes
+    label: "{{ remote.name }}"

@@ -5,7 +5,7 @@
     remote: "{{ remote.name }}"
     version: "{{ (remote.branches[0]) if (remote.branches is defined) else 'HEAD' }}"
     dest: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"
-    accept_hostkey: yes
+    accept_newhostkey: yes
 
 - name: "Configure additional branches for initial remote"
   ansible.builtin.include_tasks: branch.yml

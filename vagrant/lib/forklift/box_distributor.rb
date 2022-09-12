@@ -74,10 +74,15 @@ module Forklift
     end
 
     def add_ssh_settings(box, machine, keys)
-      return if fetch_setting(box, 'use_ssh_settings_vagrant_ssh_only', false) && !argv_include_any?(%w[ssh ssh-config])
+      add_ssh_username(box, machine)
       keys.each do |key|
         add_ssh_setting(box, machine, key)
       end
+    end
+
+    def add_ssh_username(box, machine)
+      return if fetch_setting(box, 'use_ssh_settings_vagrant_ssh_only', false) && !argv_include_any?(%w[ssh ssh-config])
+      add_ssh_setting(box, machine, 'username')
     end
 
     def define_vm(config, box = {})
@@ -87,7 +92,7 @@ module Forklift
         machine.vm.box = box.fetch('box_name', nil)
         machine.vm.box_version = box.fetch('box_version', nil)
 
-        add_ssh_settings(box, machine, %w[username forward_agent keys_only])
+        add_ssh_settings(box, machine, %w[forward_agent keys_only])
 
         machine.vm.box_check_update = box.fetch('box_check_update', true)
 
@@ -206,6 +211,7 @@ module Forklift
           ansible_provisioner.extra_vars = extra_vars
           ansible_provisioner.groups = @ansible_groups
           ansible_provisioner.verbose = ansible['verbose'] || false
+          ansible_provisioner.force_remote_user = false
           %w[config_file galaxy_role_file inventory_path].each do |key|
             if (value = ansible[key])
               ansible_provisioner.send("#{key}=", value)

@@ -1,15 +1,25 @@
 ---
 - name: "Configure repository branch"
   block:
-    - name: "Configure repository branch remote"
-      community.general.git_config:
-        scope: local
-        repo: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"
-        name: "branch.{{ branch }}.remote"
-        value: "{{ remote.name }}"
-    - name: "Configure repository branch merge"
-      community.general.git_config:
-        scope: local
-        repo: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"
-        name: "branch.{{ branch }}.merge"
-        value: "refs/heads/{{ branch }}"
+#   - name: "Configure repository branch remote"
+#     community.general.git_config:
+#       scope: local
+#       repo: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"
+#       name: "branch.{{ branch }}.remote"
+#       value: "{{ remote.name }}"
+#   - name: "Configure repository branch merge"
+#     community.general.git_config:
+#       scope: local
+#       repo: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"
+#       name: "branch.{{ branch }}.merge"
+#       value: "refs/heads/{{ branch }}"
+#   - name: "Create local branch"
+#     ansible.builtin.git:
+#       repo: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"
+#       remote: "{{ remote.name }}"
+#       version: "{{ branch }}"
+#       clone: no
+    - name: "Create local branch"
+      ansible.builtin.command:
+        cmd: "git branch -f {{ branch }} {{ remote.name }}/{{ branch }}"
+        chdir: "{{ git_repo_repository.dir }}/{{ git_repo_repository.name }}"

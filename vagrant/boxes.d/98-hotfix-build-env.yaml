@@ -1,0 +1,123 @@
+---
+fedora36-hotfix-build:
+  box: fedora36
+  ssh_forward_agent: true
+  ssh_username: DEV_USER
+  ssh_keys_only: false
+  use_ssh_settings_vagrant_ssh_only: true
+  multi_ansible:
+    - 'ansible'
+    - 'ansible_devuser'
+  ansible:
+    variables:
+      unprivileged_user_username: DEV_USER
+      unprivileged_user_additional_groups: ["mock"]
+      unprivileged_user_import_ssh_pub_key_github: DEV_GITHUB_USER
+      inherit_kerberos_config: '/etc/krb5.conf'
+      inherit_kerberos_ccache: '/tmp/krb5cc_DEV_USER'
+      inherit_kerberos_local_user_name: DEV_USER
+    verbose: true
+    playbook:
+      - 'playbooks/dev_user.yml'
+  ansible_devuser:
+    variables:
+      ansible_user: DEV_USER
+      rcm_repository: RCM_REPO_BASEURL
+      hotfix_build_packages:
+        - git
+        - git-core
+        - git-annex
+        - bash-completion
+        - make
+        - make-devel
+        - gcc
+        - gcc-c++
+        - libcurl
+        - libcurl-devel
+        - ruby-devel
+        - rubygem-bundler
+        - rubygem-unf
+        - rubygem-unf_ext
+        - rubygem-ffi
+        - rubygem-byebug
+        - curl-devel
+        - openssl-devel
+        - redhat-rpm-config
+        - brewkoji
+        - rpm-build
+        - mock
+        - crudini
+        - python3-pip
+        - python3-bugzilla
+        - rpmdevtools
+        - rpmlint
+      git_repositories:
+        - name: 'pulp-rpm'
+          dir: '/home/DEV_USER'
+          remotes:
+            - name: 'upstream'
+              url: 'git@github.com:pulp/pulp_rpm.git'
+              branches:
+                - 'main'
+        - name: 'pulpcore-packaging'
+          dir: '/home/DEV_USER'
+          remotes:
+            - name: 'downstream'
+              url: 'git@gitlab.cee.redhat.com:satellite/pulpcore-packaging.git'
+              branches:
+                - 'PULPCORE-3.18'
+          python_packages:
+            - ansible
+            - obal
+            - tito
+        - name: 'satellite-packaging'
+          dir: '/home/DEV_USER'
+          remotes:
+            - name: 'downstream'
+              url: 'git@gitlab.cee.redhat.com:satellite/satellite-packaging.git'
+              branches:
+                - 'SATELLITE-STREAM'
+                - 'SATELLITE-6.9.0'
+                - 'SATELLITE-6.10.0'
+                - 'SATELLITE-6.11.0'
+          python_packages:
+            - ansible
+            - obal
+            - tito
+        - name: 'tool_belt'
+          dir: '/home/DEV_USER'
+          remotes:
+            - name: 'downstream'
+              url: 'git@gitlab.cee.redhat.com:satellite/tool_belt.git'
+              branches:
+                - 'master'
+          install_gems: true
+        - name: 'katello'
+          dir: '/home/DEV_USER'
+          remotes:
+            - name: 'upstream'
+              url: 'git@github.com:Katello/katello.git'
+              branches:
+                - 'master'
+            - name: 'downstream'
+              url: 'git@gitlab.cee.redhat.com:satellite/katello.git'
+              branches:
+                - 'SATELLITE-6.9.0'
+                - 'SATELLITE-6.10.0'
+                - 'SATELLITE-6.11.0'
+        - name: 'foreman'
+          dir: '/home/DEV_USER'
+          remotes:
+            - name: 'upstream'
+              url: 'git@github.com:theforeman/foreman.git'
+              branches:
+                - 'develop'
+            - name: 'downstream'
+              url: 'git@gitlab.cee.redhat.com:satellite/foreman.git'
+              branches:
+                - 'SATELLITE-6.9.0'
+                - 'SATELLITE-6.10.0'
+                - 'SATELLITE-6.11.0'
+    verbose: true
+    playbook:
+      - 'playbooks/hotfix_build_env.yml'

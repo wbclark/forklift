@@ -1,0 +1,25 @@
+---
+- hosts: all
+  tasks:
+    - name: "Add RCM repository"
+      ansible.builtin.yum_repository:
+        name: rcm
+        description: RCM repository
+        baseurl: "{{ rcm_repository }}"
+        gpgcheck: no
+      become: true
+
+    - name: "Install packages"
+      ansible.builtin.package:
+        name: "{{ hotfix_build_packages }}"
+        state: present
+      become: true
+
+    - name: "Setup git repositories"
+      ansible.builtin.include_role:
+        name: git_repo
+      loop: "{{ git_repositories }}"
+      loop_control:
+        loop_var: repo
+      vars:
+        git_repo_repository: "{{ repo }}"

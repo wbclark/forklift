@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: "Include Timezone role"
+      ansible.builtin.include_role:
+        name: inherit_timezone
+
+    - name: "Include unprivileged_user role"
+      ansible.builtin.include_role:
+        name: unprivileged_user
+
+    - name: "Include inherit_kerberos role"
+      ansible.builtin.include_role:
+        name: inherit_kerberos

@@ -2,7 +2,7 @@
 fedora36-hotfix-build:
   box: fedora36
   ssh_forward_agent: true
-  ssh_username: DEV_USER
+  ssh_username: wclark
   ssh_keys_only: false
   use_ssh_settings_vagrant_ssh_only: true
   multi_ansible:
@@ -10,19 +10,19 @@ fedora36-hotfix-build:
     - 'ansible_devuser'
   ansible:
     variables:
-      unprivileged_user_username: DEV_USER
+      unprivileged_user_username: wclark
       unprivileged_user_additional_groups: ["mock"]
-      unprivileged_user_import_ssh_pub_key_github: DEV_GITHUB_USER
+      unprivileged_user_import_ssh_pub_key_github: wbclark
       inherit_kerberos_config: '/etc/krb5.conf'
-      inherit_kerberos_ccache: '/tmp/krb5cc_DEV_USER'
-      inherit_kerberos_local_user_name: DEV_USER
+      inherit_kerberos_ccache: '/tmp/krb5cc_wclark'
+      inherit_kerberos_local_user_name: wclark
     verbose: true
     playbook:
       - 'playbooks/dev_user.yml'
   ansible_devuser:
     variables:
-      ansible_user: DEV_USER
-      rcm_repository: RCM_REPO_BASEURL
+      ansible_user: wclark
+      rcm_repository: 'http://download.devel.redhat.com/rel-eng/RCMTOOLS/latest-RCMTOOLS-2-F-$releasever/compose/Everything/$basearch/os/'
       hotfix_build_packages:
         - git
         - git-core
@@ -53,14 +53,14 @@ fedora36-hotfix-build:
         - rpmlint
       git_repositories:
         - name: 'pulp-rpm'
-          dir: '/home/DEV_USER'
+          dir: '/home/wclark'
           remotes:
             - name: 'upstream'
               url: 'git@github.com:pulp/pulp_rpm.git'
               branches:
                 - 'main'
         - name: 'pulpcore-packaging'
-          dir: '/home/DEV_USER'
+          dir: '/home/wclark'
           remotes:
             - name: 'downstream'
               url: 'git@gitlab.cee.redhat.com:satellite/pulpcore-packaging.git'
@@ -71,7 +71,7 @@ fedora36-hotfix-build:
             - obal
             - tito
         - name: 'satellite-packaging'
-          dir: '/home/DEV_USER'
+          dir: '/home/wclark'
           remotes:
             - name: 'downstream'
               url: 'git@gitlab.cee.redhat.com:satellite/satellite-packaging.git'
@@ -85,7 +85,7 @@ fedora36-hotfix-build:
             - obal
             - tito
         - name: 'tool_belt'
-          dir: '/home/DEV_USER'
+          dir: '/home/wclark'
           remotes:
             - name: 'downstream'
               url: 'git@gitlab.cee.redhat.com:satellite/tool_belt.git'
@@ -93,7 +93,7 @@ fedora36-hotfix-build:
                 - 'master'
           install_gems: true
         - name: 'katello'
-          dir: '/home/DEV_USER'
+          dir: '/home/wclark'
           remotes:
             - name: 'upstream'
               url: 'git@github.com:Katello/katello.git'
@@ -106,7 +106,7 @@ fedora36-hotfix-build:
                 - 'SATELLITE-6.10.0'
                 - 'SATELLITE-6.11.0'
         - name: 'foreman'
-          dir: '/home/DEV_USER'
+          dir: '/home/wclark'
           remotes:
             - name: 'upstream'
               url: 'git@github.com:theforeman/foreman.git'
@@ -121,3 +121,94 @@ fedora36-hotfix-build:
     verbose: true
     playbook:
       - 'playbooks/hotfix_build_env.yml'
+      - 'user_playbooks/kakoune.yml'
+
+centos8-stream-wclark-katello-devel:
+  box: centos8-stream
+  ssh_forward_agent: true
+  ssh_username: wclark
+  ssh_keys_only: false
+  use_ssh_settings_vagrant_ssh_only: true
+  multi_ansible:
+    - 'ansible'
+    - 'ansible_devuser'
+  ansible:
+    variables:
+      unprivileged_user_username: wclark
+      unprivileged_user_import_ssh_pub_key_github: wbclark
+      inherit_kerberos_local_user_name: wclark
+      inherit_kerberos_config: '/etc/krb5.conf'
+      inherit_kerberos_ccache: '/tmp/krb5cc_wclark'
+    verbose: true
+    playbook:
+      - 'playbooks/dev_user.yml'
+  ansible_devuser:
+    playbook:
+      - 'playbooks/katello_devel.yml'
+      - 'user_playbooks/katello_repos.yml'
+      - 'user_playbooks/kakoune.yml'
+    group: 'devel'
+    verbose: true
+    variables:
+      ansible_user: wclark
+      foreman_devel_github_push_ssh: true
+      katello_devel_github_username: wbclark
+      foreman_repositories_environment: staging
+      katello_repositories_environment: staging
+      katello_repositories_version: nightly
+      katello_devel_user: wclark
+      katello_devel_group: wclark
+      foreman_installer_devel_scenario_user: wclark
+      foreman_installer_devel_scenario_group: wclark
+      foreman_installer_options:
+        - "--foreman-proxy-content-enable-ostree=true"
+        - "--katello-devel-npm-timeout=3600"
+        - "--katello-devel-modulestream-nodejs=14"
+        - "-l info"
+      katello_dev_additional_packages:
+        - git
+        - bash-completion
+      git_repositories:
+        - name: 'katello'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'wbclark'
+              url: 'git@github.com:wbclark/katello.git'
+              branches:
+                - 'master'
+            - name: 'upstream'
+              url: 'git@github.com:Katello/katello.git'
+
+centos8-stream-wclark-fpc-devel:
+  box: centos8-stream
+  ssh_forward_agent: true
+  ssh_username: wclark
+  ssh_keys_only: false
+  use_ssh_settings_vagrant_ssh_only: true
+  multi_ansible:
+    - 'ansible'
+    - 'ansible_devuser'
+  ansible:
+    variables:
+      unprivileged_user_username: wclark
+      unprivileged_user_import_ssh_pub_key_github: wbclark
+      inherit_kerberos_local_user_name: wclark
+      inherit_kerberos_config: '/etc/krb5.conf'
+      inherit_kerberos_ccache: '/tmp/krb5cc_wclark'
+    verbose: true
+    playbook:
+      - 'playbooks/dev_user.yml'
+  ansible_devuser:
+    playbook:
+      - 'user_playbooks/fpc_wclark_dev.yml'
+      - 'user_playbooks/kakoune.yml'
+    group: 'devel'
+    verbose: true
+    variables:
+      ansible_user: wclark
+      foreman_repositories_environment: staging
+      katello_repositories_environment: staging
+      katello_repositories_version: nightly
+      foreman_installer_options:
+        - "--foreman-proxy-content-enable-ostree=true"
+        - "-l info"

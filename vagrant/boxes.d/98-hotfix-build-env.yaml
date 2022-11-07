@@ -178,6 +178,17 @@ centos8-stream-wclark-katello-devel:
                 - 'master'
             - name: 'upstream'
               url: 'git@github.com:Katello/katello.git'
+          install_gems: true
+        - name: 'foreman'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'wbclark'
+              url: 'git@github.com:wbclark/foreman.git'
+              branches:
+                - 'develop'
+            - name: 'upstream'
+              url: 'git@github.com:theforeman/foreman.git'
+          install_gems: true
 
 centos8-stream-wclark-fpc-devel:
   box: centos8-stream

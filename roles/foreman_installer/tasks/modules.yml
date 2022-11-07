@@ -5,6 +5,3 @@
     state: present
   when:
     - foreman_repositories_version is defined
-    - foreman_repositories_version != "nightly"
-    - foreman_repositories_version is version('2.5', '>=')
-    - foreman_repositories_version is version('3.1', '<=')

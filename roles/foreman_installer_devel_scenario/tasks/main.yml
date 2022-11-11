@@ -16,7 +16,7 @@
   with_items:
     - katello-devel.yaml
 
-- name: 'Copy answers file'
+- name: "Create devel scenario answers file if it doesn't already exist"
   ansible.builtin.template:
     src: "{{ role_path }}/templates/{{ item }}"
     dest: /etc/foreman-installer/scenarios.d/{{ item }}

@@ -3,6 +3,7 @@
   ansible.builtin.yum:
     name: katello-repos
     state: absent
+  become: true
 
 - name: 'Katello {{ katello_repositories_version }} Staging repository'
   yum_repository:
@@ -22,6 +23,7 @@
     creates: /etc/dnf/modules.d/katello.module
   when:
     - ansible_distribution_major_version == '8'
+  become: true
 
 - name: 'Add Pulpcore repository'
   ansible.builtin.include_role:

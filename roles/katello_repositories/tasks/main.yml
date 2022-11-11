@@ -9,6 +9,7 @@
     - ansible_distribution != "RedHat"
     - katello_repositories_version != 'nightly'
     - katello_repositories_version is version('4.10', '<')
+  become: true
 
 - name: Enable codeready-builder for libdb_cxx used by qpid-cpp-server-linearstore
   ansible.builtin.command: subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
@@ -17,9 +18,11 @@
     - ansible_distribution == "RedHat"
     - katello_repositories_version != 'nightly'
     - katello_repositories_version is version('4.10', '<')
+  become: true
 
 - name: 'Clean yum'
   ansible.builtin.command: 'yum clean all'
   tags:
     - packages
   when: ansible_os_family == 'RedHat'
+  become: true

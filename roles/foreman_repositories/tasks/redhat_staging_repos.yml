@@ -5,6 +5,7 @@
     state: absent
   tags:
     - packages
+  become: true
 
 - name: 'Foreman {{ foreman_repositories_version }} Staging repository'
   yum_repository:
@@ -33,3 +34,4 @@
     creates: /etc/dnf/modules.d/foreman.module
   when:
     - ansible_distribution_major_version == '8'
+  become: true

@@ -144,8 +144,8 @@ centos8-stream-wclark-katello-devel:
       - 'playbooks/dev_user.yml'
   ansible_devuser:
     playbook:
-      - 'playbooks/katello_devel.yml'
       - 'user_playbooks/katello_repos.yml'
+      - 'playbooks/katello_devel.yml'
       - 'user_playbooks/kakoune.yml'
     group: 'devel'
     verbose: true
@@ -162,10 +162,29 @@ centos8-stream-wclark-katello-devel:
       foreman_installer_devel_scenario_group: wclark
       foreman_installer_options:
         - "--foreman-proxy-content-enable-ostree=true"
+        - "--foreman-proxy-content-enable-katello-agent=false"
         - "--katello-devel-npm-timeout=3600"
         - "--katello-devel-modulestream-nodejs=14"
+        - "--katello-devel-foreman-manage-repo=false"
+        - "--katello-devel-katello-manage-repo=false"
         - "-l info"
       katello_dev_additional_packages:
+        - rubygem-bundler
+        - ruby-devel
+        - make
+        - make-devel
+        - gcc
+        - gcc-c++
+        - curl-devel
+        - libcurl-devel
+        - openssl-devel
+        - redhat-rpm-config
+        - postgresql-devel
+        - qpid-proton-c
+        - qpid-proton-c-devel
+        - libvirt-devel
+        - systemd-devel
+        - libxml2-devel
         - git
         - bash-completion
       git_repositories:

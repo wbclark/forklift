@@ -5,6 +5,7 @@
     state: absent
   tags:
     - packages
+  become: true
 
 - name: 'Foreman {{ foreman_repositories_version }} Koji repository'
   ansible.builtin.yum_repository:
@@ -15,6 +16,7 @@
     gpgcheck: no
   tags:
     - packages
+  become: true
 
 - name: 'Foreman {{ foreman_repositories_version }} Plugins Koji repository'
   ansible.builtin.yum_repository:
@@ -26,6 +28,7 @@
     gpgcheck: no
   tags:
     - packages
+  become: true
 
 - name: 'Set module_hotfixes=1'
   ansible.builtin.lineinfile:
@@ -39,6 +42,7 @@
   when:
     - foreman_repositories_version != 'nightly'
     - foreman_repositories_version is version('3.1', '<=')
+  become: true
 
 - name: 'Enable foreman:el8 module'
   ansible.builtin.command: dnf module enable -y foreman:el8
@@ -51,3 +55,4 @@
   when:
     - foreman_repositories_version == "nightly" or foreman_repositories_version is version('3.2', '>=')
     - ansible_distribution_major_version == '8'
+  become: true

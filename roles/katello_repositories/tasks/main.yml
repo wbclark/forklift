@@ -5,7 +5,9 @@
 - name: Enable powertools for libdb_cxx used by qpid-cpp-server-linearstore
   ansible.builtin.command: dnf config-manager --set-enabled powertools
   when: ansible_distribution_major_version == "8" and ansible_distribution != "RedHat"
+  become: true
 
 - name: Enable codeready-builder for libdb_cxx used by qpid-cpp-server-linearstore
   ansible.builtin.command: subscription-manager repos --enable codeready-builder-for-rhel-8-x86_64-rpms
   when: ansible_distribution_major_version == "8" and ansible_distribution == "RedHat"
+  become: true

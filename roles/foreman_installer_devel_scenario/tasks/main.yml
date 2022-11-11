@@ -20,6 +20,7 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/{{ item }}"
     dest: /etc/foreman-installer/scenarios.d/{{ item }}
+    force: no
   with_items:
     - katello-devel-answers.yaml
 

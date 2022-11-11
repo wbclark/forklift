@@ -3,6 +3,7 @@
   ansible.builtin.yum:
     name: katello-repos
     state: absent
+  become: true
 
 - name: 'Katello {{ katello_repositories_version }} Koji repository'
   ansible.builtin.yum_repository:
@@ -11,6 +12,7 @@
     baseurl: "http://koji.katello.org/releases/yum/katello-{{ katello_repositories_version }}/katello/el{{ ansible_distribution_major_version }}/x86_64/"
     priority: '1'
     gpgcheck: no
+  become: true
 
 - name: 'Candlepin Koji repository'
   ansible.builtin.yum_repository:
@@ -19,6 +21,7 @@
     baseurl: "http://koji.katello.org/releases/yum/katello-{{ katello_repositories_version }}/candlepin/el{{ ansible_distribution_major_version }}/x86_64/"
     priority: '1'
     gpgcheck: no
+  become: true
 
 - name: 'Set module_hotfixes=1'
   ansible.builtin.lineinfile:
@@ -30,6 +33,7 @@
   when:
     - katello_repositories_version != 'nightly'
     - katello_repositories_version is version('4.2', '<=')
+  become: true
 
 - name: 'Enable katello:el8 module'
   ansible.builtin.command: dnf module enable -y katello:el8
@@ -41,6 +45,7 @@
   when:
     - katello_repositories_version == "nightly" or katello_repositories_version is version('4.4', '>=')
     - ansible_distribution_major_version == '8'
+  become: true
 
 - name: 'Add Pulpcore repository'
   ansible.builtin.include_role:

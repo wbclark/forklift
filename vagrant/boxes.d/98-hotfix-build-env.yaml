@@ -52,6 +52,17 @@ fedora36-hotfix-build:
         - rpmdevtools
         - rpmlint
       git_repositories:
+        - name: 'katello-host-tools'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'wbclark'
+              url: 'git@github.com:wbclark/katello-host-tools.git'
+              branches:
+                - 'master'
+            - name: 'upstream'
+              url: 'git@github.com:Katello/katello-host-tools.git'
+            - name: 'iballou'
+              url: 'git@github.com:ianballou/katello-host-tools.git'
         - name: 'pulp-rpm'
           dir: '/home/wclark'
           remotes:
@@ -59,6 +70,15 @@ fedora36-hotfix-build:
               url: 'git@github.com:pulp/pulp_rpm.git'
               branches:
                 - 'main'
+        - name: 'pulp-container'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'wbclark'
+              url: 'git@github.com:wbclark/pulp_container.git'
+              branches:
+                - 'main'
+            - name: 'upstream'
+              url: 'git@github.com:pulp/pulp_container.git'
         - name: 'pulpcore-packaging'
           dir: '/home/wclark'
           remotes:
@@ -125,6 +145,7 @@ fedora36-hotfix-build:
 
 centos8-stream-wclark-katello-devel:
   box: centos8-stream
+  memory: 14336
   ssh_forward_agent: true
   ssh_username: wclark
   ssh_keys_only: false

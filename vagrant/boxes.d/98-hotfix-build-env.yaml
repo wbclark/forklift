@@ -94,6 +94,7 @@ fedora36-hotfix-build:
                 - 'SATELLITE-6.9.0'
                 - 'SATELLITE-6.10.0'
                 - 'SATELLITE-6.11.0'
+                - 'SATELLITE-6.12.0'
           python_packages:
             - ansible
             - obal
@@ -119,6 +120,7 @@ fedora36-hotfix-build:
                 - 'SATELLITE-6.9.0'
                 - 'SATELLITE-6.10.0'
                 - 'SATELLITE-6.11.0'
+                - 'SATELLITE-6.12.0'
         - name: 'foreman'
           dir: '/home/wclark'
           remotes:

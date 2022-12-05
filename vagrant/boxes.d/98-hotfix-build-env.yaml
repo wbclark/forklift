@@ -52,6 +52,13 @@ fedora36-hotfix-build:
         - rpmdevtools
         - rpmlint
       git_repositories:
+        - name: 'foreman_rh_cloud'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'upstream'
+              url: 'git@github.com:theforeman/foreman_rh_cloud.git'
+              branches:
+                - 'master'
         - name: 'katello-host-tools'
           dir: '/home/wclark'
           remotes:

@@ -86,6 +86,13 @@ fedora36-hotfix-build:
                 - 'main'
             - name: 'upstream'
               url: 'git@github.com:pulp/pulp_container.git'
+        - name: 'smart_proxy_container_gateway'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'upstream'
+              url: 'git@github.com:Katello/smart_proxy_container_gateway.git'
+              branches:
+                - 'main'
         - name: 'pulpcore-packaging'
           dir: '/home/wclark'
           remotes:
@@ -93,6 +100,7 @@ fedora36-hotfix-build:
               url: 'git@gitlab.cee.redhat.com:satellite/pulpcore-packaging.git'
               branches:
                 - 'PULPCORE-3.18'
+                - 'PULPCORE-3.16'
           python_packages:
             - ansible
             - obal

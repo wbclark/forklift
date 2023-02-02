@@ -207,6 +207,7 @@ centos8-stream-wclark-katello-devel:
         - "--katello-devel-modulestream-nodejs=14"
         - "--katello-devel-foreman-manage-repo=false"
         - "--katello-devel-katello-manage-repo=false"
+        - "--katello-devel-use-ssh-fork=true"
         - "-l info"
       katello_dev_additional_packages:
         - rubygem-bundler

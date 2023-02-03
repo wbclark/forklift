@@ -213,8 +213,11 @@ centos8-stream-wclark-katello-devel:
         - "--katello-devel-modulestream-nodejs=14"
         - "--katello-devel-foreman-manage-repo=false"
         - "--katello-devel-katello-manage-repo=false"
-        - "--katello-devel-use-ssh-fork=true"
         - "-l info"
+      foreman_installer_custom_hiera: |
+        katello_devel::extra_plugins:
+          - name: 'theforeman/foreman_remote_execution'
+            manage_repo: false
       katello_dev_additional_packages:
         - rubygem-bundler
         - ruby-devel
@@ -231,6 +234,7 @@ centos8-stream-wclark-katello-devel:
         - qpid-proton-c-devel
         - libvirt-devel
         - systemd-devel
+        - libyaml-devel
         - libxml2-devel
         - git
         - bash-completion
@@ -254,6 +258,16 @@ centos8-stream-wclark-katello-devel:
                 - 'develop'
             - name: 'upstream'
               url: 'git@github.com:theforeman/foreman.git'
+          install_gems: true
+        - name: 'foreman_remote_execution'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'wbclark'
+              url: 'git@github.com:wbclark/foreman_remote_execution.git'
+              branches:
+                - 'master'
+            - name: 'upstream'
+              url: 'git@github.com:theforeman/foreman_remote_execution.git'
           install_gems: true
 
 centos8-stream-wclark-fpc-devel:

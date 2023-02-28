@@ -157,6 +157,15 @@ fedora36-hotfix-build:
               branches:
                 - 'main'
                 - '3.16'
+        - name: 'fog-vsphere'
+          dir: '/home/wclark'
+          remotes:
+            - name: 'upstream'
+              url: 'git@github.com:fog/fog-vsphere.git'
+              branches:
+                - 'master'
+                - '2-stable'
+                - '3-stable'
     verbose: true
     playbook:
       - 'playbooks/hotfix_build_env.yml'

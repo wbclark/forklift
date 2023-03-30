@@ -58,7 +58,7 @@ fedora36-hotfix-build:
             - name: 'upstream'
               url: 'git@github.com:theforeman/foreman_rh_cloud.git'
               branches:
-                - 'master'
+                - 'foreman_3_7'
         - name: 'katello-host-tools'
           dir: '/home/wclark'
           remotes:

@@ -193,7 +193,9 @@ centos8-stream-wclark-katello-devel:
       - 'playbooks/dev_user.yml'
   ansible_devuser:
     playbook:
+      - 'user_playbooks/git_config.yml'
       - 'user_playbooks/katello_repos.yml'
+      - 'user_playbooks/source_repos.yml'
       - 'playbooks/katello_devel.yml'
       - 'user_playbooks/kakoune.yml'
     group: 'devel'

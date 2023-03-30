@@ -168,6 +168,7 @@ fedora36-hotfix-build:
                 - '3-stable'
     verbose: true
     playbook:
+      - 'user_playbooks/git_config.yml'
       - 'playbooks/hotfix_build_env.yml'
       - 'user_playbooks/kakoune.yml'
 

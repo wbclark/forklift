@@ -214,16 +214,12 @@ centos8-stream-wclark-katello-devel:
       foreman_installer_devel_scenario_group: wclark
       foreman_installer_options:
         - "--foreman-proxy-content-enable-ostree=true"
-        - "--foreman-proxy-content-enable-katello-agent=false"
         - "--katello-devel-npm-timeout=3600"
         - "--katello-devel-modulestream-nodejs=14"
         - "--katello-devel-foreman-manage-repo=false"
         - "--katello-devel-katello-manage-repo=false"
+        - "--katello-devel-rex-manage-repo=false"
         - "-l info"
-      foreman_installer_custom_hiera: |
-        katello_devel::extra_plugins:
-          - name: 'theforeman/foreman_remote_execution'
-            manage_repo: false
       katello_dev_additional_packages:
         - rubygem-bundler
         - ruby-devel
@@ -236,8 +232,6 @@ centos8-stream-wclark-katello-devel:
         - openssl-devel
         - redhat-rpm-config
         - postgresql-devel
-        - qpid-proton-c
-        - qpid-proton-c-devel
         - libvirt-devel
         - systemd-devel
         - libyaml-devel

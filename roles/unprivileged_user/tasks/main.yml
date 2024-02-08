@@ -47,7 +47,7 @@
   become: true
 
 - name: "Copy root authorized_keys to unprivileged user"
-- when:
+  when:
     - not authorized_keys_file.stat.exists
     - unprivileged_user_import_ssh_pub_key | default(True)
   become: true

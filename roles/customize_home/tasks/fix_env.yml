@@ -1,3 +1,17 @@
+- name: Debug
+  ansible.builtin.debug:
+    msg: "ansible_user: {{ ansible_user }}, ansible_user_dir: {{ ansible_user_dir }}, ansible_env.HOME: {{ ansible_env.HOME }}"
+
+- name: Debug Become True
+  become: true
+  ansible.builtin.debug:
+    msg: "ansible_user: {{ ansible_user }}, ansible_user_dir: {{ ansible_user_dir }}, ansible_env.HOME: {{ ansible_env.HOME }}"
+
+- name: Debug Become False
+  become: false
+  ansible.builtin.debug:
+    msg: "ansible_user: {{ ansible_user }}, ansible_user_dir: {{ ansible_user_dir }}, ansible_env.HOME: {{ ansible_env.HOME }}"
+
 - name: Check that the .env exists
   stat:
     path: "{{ ansible_user_dir }}/foreman/.env"

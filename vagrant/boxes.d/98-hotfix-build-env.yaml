@@ -203,13 +203,14 @@ centos8-stream-wclark-katello-devel:
     verbose: true
     variables:
       ansible_user: wclark
+#     ansible_user_dir: /home/wclark
       foreman_devel_github_push_ssh: true
       katello_devel_github_username: wbclark
       foreman_repositories_environment: staging
       katello_repositories_environment: staging
       katello_repositories_version: nightly
-      katello_devel_user: wclark
-      katello_devel_group: wclark
+#     katello_devel_user: wclark
+#     katello_devel_group: wclark
       foreman_installer_devel_scenario_user: wclark
       foreman_installer_devel_scenario_group: wclark
       foreman_installer_options:

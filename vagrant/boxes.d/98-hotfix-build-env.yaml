@@ -73,6 +73,7 @@ fedora36-hotfix-build:
               url: 'git@github.com:pulp/pulp_rpm.git'
               branches:
                 - 'main'
+                - '3.19'
         - name: 'pulp-container'
           dir: '/home/wclark'
           remotes:

@@ -1,6 +1,6 @@
 ---
-fedora36-hotfix-build:
-  box: fedora36
+fedora38-hotfix-build:
+  box: fedora38
   ssh_forward_agent: true
   ssh_username: wclark
   ssh_keys_only: false
